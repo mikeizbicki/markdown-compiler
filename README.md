@@ -10,10 +10,12 @@ Basic usage:
 ```
 $ markdown-compiler example/README.md
 ```
-![](examples/example1.png)
+
+<img src='examples/example.png' width=300px>
 
 Fancy CSS formatting can be included with the flag `--add_css`:
 ```
 $ markdown-compiler example/README.md --add_css
 ```
-![](examples/example2.png)
+
+<img src='examples/example-css.png' width=300px>
