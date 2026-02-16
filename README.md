@@ -6,12 +6,14 @@
 
 A simple project for converting markdown files to HTML.
 
-Basica usage:
+Basic usage:
 ```
 $ markdown-compiler example/README.md
 ```
+![](examples/example1.png)
 
 Fancy CSS formatting can be included with the flag `--add_css`:
 ```
 $ markdown-compiler example/README.md --add_css
 ```
+![](examples/example2.png)
