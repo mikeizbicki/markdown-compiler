@@ -29,6 +29,7 @@ Let's consider Github's implementation of their Markdown-HTML compiler:
     1. This discrepancy between how much users pay and how much it costs "per user" to pay an engineer is why software engineers make so much money
     1. This is a simplified analysis.
         1. The field of "software engineering" studies actually making these project timeline estimates and accounting details.
+1. Recall that employers look at your github profile when hiring, and one of the purposes of this project is to help you create a strong github profile.
 
 **Due:** 
 ~~Tuesday, 24 February, midnight~~
