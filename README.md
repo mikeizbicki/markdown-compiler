@@ -1,8 +1,6 @@
 # Markdown to HTML compiler
 
-<img src="https://github.com/mikeizbicki/markdown-compiler/workflows/doctests/badge.svg" />
-<img src="https://github.com/mikeizbicki/markdown-compiler/workflows/flake8/badge.svg" />
-<img src="https://github.com/mikeizbicki/markdown-compiler/workflows/command_line/badge.svg" />
+<img src="https://github.com/mikeizbicki/markdown-compiler/workflows/doctests/badge.svg" /><img src="https://github.com/mikeizbicki/markdown-compiler/workflows/flake8/badge.svg" /><img src="https://github.com/mikeizbicki/markdown-compiler/workflows/command_line/badge.svg" />
 
 A simple project for converting markdown files to HTML.
 
