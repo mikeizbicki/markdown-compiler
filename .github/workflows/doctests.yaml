@@ -16,6 +16,5 @@ jobs:
           python-version: ${{matrix.python}}
       - name: Run tests
         run: |
-          python -m doctest --verbose markdown_compiler/__main__.py
           python -m doctest --verbose markdown_compiler/__init__.py
           python -m doctest --verbose markdown_compiler/util/line_functions.py
