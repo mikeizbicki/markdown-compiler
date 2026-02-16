@@ -130,33 +130,11 @@ def compile_lines(text):
     </pre>
     <BLANKLINE>
     '''
-
     lines = text.split('\n')
     new_lines = []
     in_paragraph = False
-    in_code_block = False
     for line in lines:
-        # Don't strip lines inside code blocks (preserves indentation)
-        if not in_code_block:
-            line = line.strip()
-
-        # Check for code block delimiter
-        if line.strip() == '```':
-            if in_code_block:
-                # Closing code block
-                new_lines.append('</pre>')
-                in_code_block = False
-            else:
-                # Opening code block
-                new_lines.append('<pre>')
-                in_code_block = True
-            continue
-
-        if in_code_block:
-            # Inside code block - don't process markdown, preserve line as-is
-            new_lines.append(line)
-            continue
-
+        line = line.strip()
         if line=='':
             if in_paragraph:
                 line='</p>'
@@ -247,7 +225,7 @@ def minify(html):
     >>> minify('a\n\n\n\n\n\n\n\n\n\n\n\n\n\nb\n\n\n\n\n\n\n\n\n\n')
     'a b'
     '''
-    return ' '.join(html.split())
+    return html
 
 
 def convert_file(input_file, add_css):

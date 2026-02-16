@@ -26,19 +26,8 @@ def compile_headers(line):
     >>> compile_headers('      # this is not a header')
     '      # this is not a header'
     '''
-    if line.startswith('######'):
-        return '<h6>' + line[6:] + '</h6>'
-    elif line.startswith('#####'):
-        return '<h5>' + line[5:] + '</h5>'
-    elif line.startswith('####'):
-        return '<h4>' + line[4:] + '</h4>'
-    elif line.startswith('###'):
-        return '<h3>' + line[3:] + '</h3>'
-    elif line.startswith('##'):
-        return '<h2>' + line[2:] + '</h2>'
-    elif line.startswith('#'):
-        return '<h1>' + line[1:] + '</h1>'
     return line
+
 
 def compile_italic_star(line):
     '''
@@ -61,28 +50,7 @@ def compile_italic_star(line):
     >>> compile_italic_star('*')
     '*'
     '''
-    result = ''
-    i = 0
-    while i < len(line):
-        if line[i] == '*':
-            # Look for closing *
-            closing = -1
-            for j in range(i + 1, len(line)):
-                if line[j] == '*':
-                    closing = j
-                    break
-            if closing != -1:
-                # Found a pair
-                result += '<i>' + line[i+1:closing] + '</i>'
-                i = closing + 1
-            else:
-                # No closing *, keep the *
-                result += line[i]
-                i += 1
-        else:
-            result += line[i]
-            i += 1
-    return result
+    return line
 
 
 def compile_italic_underscore(line):
@@ -103,8 +71,7 @@ def compile_italic_underscore(line):
     >>> compile_italic_underscore('_')
     '_'
     '''
-    import re
-    return re.sub(r'_([^_]+)_', r'<i>\1</i>', line)
+    return line
 
 
 def compile_strikethrough(line):
@@ -127,29 +94,7 @@ def compile_strikethrough(line):
     >>> compile_strikethrough('~~')
     '~~'
     '''
-    result = ''
-    i = 0
-    while i < len(line):
-        # Check if we have opening ~~
-        if i < len(line) - 1 and line[i] == '~' and line[i+1] == '~':
-            # Look for closing ~~
-            closing = -1
-            for j in range(i + 2, len(line) - 1):
-                if line[j] == '~' and line[j+1] == '~':
-                    closing = j
-                    break
-            if closing != -1:
-                # Found matching pair
-                result += '<ins>' + line[i+2:closing] + '</ins>'
-                i = closing + 2
-            else:
-                # No closing found, keep original
-                result += line[i]
-                i += 1
-        else:
-            result += line[i]
-            i += 1
-    return result
+    return line
 
 
 def compile_bold_stars(line):
@@ -170,8 +115,7 @@ def compile_bold_stars(line):
     >>> compile_bold_stars('**')
     '**'
     '''
-    import re
-    return re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', line)
+    return line
 
 
 def compile_bold_underscore(line):
@@ -192,8 +136,7 @@ def compile_bold_underscore(line):
     >>> compile_bold_underscore('__')
     '__'
     '''
-    import re
-    return re.sub(r'__(.+?)__', r'<b>\1</b>', line)
+    return line
 
 
 def compile_code_inline(line):
@@ -223,39 +166,7 @@ def compile_code_inline(line):
     >>> compile_code_inline('```python3')
     '```python3'
     '''
-    import re
-    
-    # Don't process lines that start with ``` (code fence markers)
-    if line.startswith('```'):
-        return line
-    
-    result = []
-    i = 0
-    while i < len(line):
-        # Check for backtick that's not part of triple backticks
-        if line[i] == '`':
-            # Check it's not a triple backtick
-            if i + 2 < len(line) and line[i:i+3] == '```':
-                result.append('```')
-                i += 3
-                continue
-            # Find closing backtick
-            end = line.find('`', i + 1)
-            if end != -1:
-                # Extract code content
-                code_content = line[i+1:end]
-                # Escape HTML characters
-                code_content = code_content.replace('<', '&lt;').replace('>', '&gt;')
-                result.append(f'<code>{code_content}</code>')
-                i = end + 1
-            else:
-                result.append(line[i])
-                i += 1
-        else:
-            result.append(line[i])
-            i += 1
-    
-    return ''.join(result)
+    return line
 
 
 def compile_links(line):
@@ -275,36 +186,6 @@ def compile_links(line):
     >>> compile_links('this is wrong: [course webpage](https://github.com/mikeizbicki/cmc-csci040')
     'this is wrong: [course webpage](https://github.com/mikeizbicki/cmc-csci040'
     '''
-def compile_links(line):
-    while True:
-        # Find the start of a potential link
-        bracket_open = line.find('[')
-        if bracket_open == -1:
-            break
-        
-        bracket_close = line.find(']', bracket_open)
-        if bracket_close == -1:
-            break
-        
-        # Check if '(' immediately follows ']'
-        if bracket_close + 1 >= len(line) or line[bracket_close + 1] != '(':
-            break
-        
-        paren_open = bracket_close + 1
-        paren_close = line.find(')', paren_open)
-        if paren_close == -1:
-            break
-        
-        # Extract text and URL
-        link_text = line[bracket_open + 1:bracket_close]
-        url = line[paren_open + 1:paren_close]
-        
-        # Build the <a> tag
-        html_link = f'<a href="{url}">{link_text}</a>'
-        
-        # Replace in line
-        line = line[:bracket_open] + html_link + line[paren_close + 1:]
-    
     return line
 
 
@@ -324,11 +205,4 @@ def compile_images(line):
     >>> compile_images('This is an image of Mike Izbicki: ![Mike Izbicki](https://avatars1.githubusercontent.com/u/1052630?v=2&s=460)')
     'This is an image of Mike Izbicki: <img src="https://avatars1.githubusercontent.com/u/1052630?v=2&s=460" alt="Mike Izbicki" />'
     '''
-    import re
-    line = re.sub(
-        r'!\[([^\]]*)\]\(([^)]*)\)',
-        r'<img src="\2" alt="\1" />',
-        line
-    )
     return line
-

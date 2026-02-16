@@ -38,11 +38,15 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_file', required=True)
-    parser.add_argument('--add_css', action='store_true')
+    # FIXME:
+    # to get the command_lines test to pass,
+    # you will need to uncomment the line below;
+    # then add the args.add_css variable as a parameter to convert_file
+    #parser.add_argument('--add_css', action='store_true')
     args = parser.parse_args()
 
     # call the main function
-    convert_file(args.input_file, args.add_css)
+    convert_file(args.input_file)
 
 if __name__ == '__main__':
     main()
